@@ -29,7 +29,8 @@ class WIfuncs {
             this.run();
             break;
           case "wiki":
-            this.requester.sendRequest(input.split(" ")[1]);
+            const searchIndex = input.indexOf(" ") + 1;
+            this.requester.sendRequest(input.slice(searchIndex).trim());
             break;
           case "help":
             this.displayHelp();
