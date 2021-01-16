@@ -1,0 +1,25 @@
+{
+  "name": "wikiterminal",
+  "version": "1.0.0",
+  "description": "Display Wikipedia articles in terminal",
+  "main": "start.js",
+  "scripts": {
+    "wiki": "node start.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuchiAtWork/WikiTerminal.git"
+  },
+  "author": "GuchiAtWork",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuchiAtWork/WikiTerminal/issues"
+  },
+  "homepage": "https://github.com/GuchiAtWork/WikiTerminal#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "inquirer": "^7.3.3",
+    "node-html-parser": "^2.0.2"
+  }
+}
