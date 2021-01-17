@@ -1,7 +1,6 @@
 const WikiAPI = require("./WikiAPI");
 const Article = require("./Article");
 const inquirer = require("inquirer");
-const readline = require("readline");
 const { RSA_X931_PADDING } = require("constants");
 
 class WIfuncs {
@@ -22,12 +21,15 @@ class WIfuncs {
         const input = answers.input;
         const command = input.split(" ")[0];
         switch (command) {
+          case "q":
           case "stop":
             return;
+          case "s":
           case "show":
             this.displayArticles();
             this.run();
             break;
+          case "w":
           case "wiki":
             const searchIndex = input.indexOf(" ") + 1;
             const title = input.slice(searchIndex).trim();
@@ -38,6 +40,26 @@ class WIfuncs {
             this.displayHelp();
             this.run();
             break;
+          case "a":
+          case "access":
+            const numberIndex = input.indexOf(" ") + 1;
+            const index = parseInt(input.slice(numberIndex).trim());
+            if (isNaN(index) || index + 1 > this.articles.length) {
+              console.log("Insert only a reachable number after access please");
+              this.run();
+            } else {
+              this.articles[index].presentArticle(true);
+            }
+            break;
+          case "p":
+          case "prev":
+            if (this.articles.length >= 1) {
+              this.articles[this.articles.length - 1].presentArticle(true);
+            } else {
+              console.log("Search a article first before using this feature!");
+              this.run();
+            }
+            break;
           default:
             this.run();
         }
@@ -45,42 +67,17 @@ class WIfuncs {
       .catch((err) => {
         console.log(err);
       });
-
-    // rl.question(
-    //   "Enter command (type help for command list) (Main Menu): ",
-    //   (answer) => {
-    //     rl.close();
-
-    //     const command = answer.split(" ")[0];
-    //     switch (command) {
-    //       case "stop":
-    //         return;
-    //       case "show":
-    //         this.displayArticles();
-    //         this.run();
-    //         break;
-    //       case "wiki":
-    //         const searchIndex = answer.indexOf(" ") + 1;
-    //         const title = answer.slice(searchIndex).trim();
-    //         const response = this.requester.sendRequest(title);
-    //         this.createArticle(response);
-    //         break;
-    //       case "help":
-    //         this.displayHelp();
-    //         this.run();
-    //         break;
-    //       default:
-    //         this.run();
-    //     }
-    //   }
-    // );
   }
 
   displayHelp() {
-    console.log("\nstop - quit program");
-    console.log("show - shows history of searched articles");
+    console.log("\nstop/q - quit program");
+    console.log("show/s - shows history of searched articles");
     console.log(
-      "wiki (title of search) - attempts to find wikipedia article\n"
+      "access/a (index of article) - access previously searched article"
+    );
+    console.log("prev/p - access last article searched");
+    console.log(
+      "wiki/w (title of search) - attempts to find wikipedia article\n"
     );
   }
 
@@ -90,9 +87,11 @@ class WIfuncs {
       return;
     }
 
+    console.log("\n");
     for (let i = 0; i < this.articles.length; i++) {
-      console.log(`${i}: ${this.articles[i].name()}`);
+      console.log(`${i}: ${this.articles[i].title}`);
     }
+    console.log("\n");
   }
 
   async createArticle(res) {
@@ -101,10 +100,8 @@ class WIfuncs {
     if (wikiArticle !== undefined) {
       const name = wikiArticle.lead.displaytitle;
 
-      this.articles.push(new Article(name, wikiArticle));
+      this.articles.push(new Article(name, wikiArticle, this));
     }
-
-    this.run();
   }
 }
 

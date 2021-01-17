@@ -1,15 +1,17 @@
 const HTMLParser = require("node-html-parser");
 const Section = require("./Section");
 const inquirer = require("inquirer");
-const readline = require("readline");
+const WikiInput = require("./WikiInput");
 
 class Article {
   #name;
   #sections = [];
   #sectionIndex = 0;
-  constructor(name, wikires) {
+  #mainmenu;
+  constructor(name, wikires, mainmenu) {
     this.#name = name;
     this.createSections(wikires);
+    this.#mainmenu = mainmenu;
   }
 
   get title() {
@@ -99,9 +101,12 @@ class Article {
           this.showHelp();
           this.presentArticle(false);
           break;
+        case "b":
         case "back":
           this.#sectionIndex = 0;
+          this.#mainmenu.run();
           break;
+        case "n":
         case "next":
           if (this.#sectionIndex + 1 > this.#sections.length) {
             console.log("Can't go to next section!");
@@ -111,6 +116,7 @@ class Article {
             this.presentArticle(true);
           }
           break;
+        case "p":
         case "prev":
           if (this.#sectionIndex - 1 < 0) {
             console.log("Can't go back!");
@@ -124,46 +130,12 @@ class Article {
           this.presentArticle(false);
       }
     });
-
-    // rl.question("Enter command (type help if needed) (Article): ", (answer) => {
-    //   rl.close();
-
-    //   const command = answer;
-
-    //   switch (command) {
-    //     case "help":
-    //       this.showHelp();
-    //       this.presentArticle(false);
-    //       break;
-    //     case "back":
-    //       this.#sectionIndex = 0;
-    //       break;
-    //     case "next":
-    //       if (this.#sectionIndex + 1 > this.#sections.length) {
-    //         console.log("Can't go to next section!");
-    //         this.presentArticle(false);
-    //       } else {
-    //         this.#sectionIndex++;
-    //         this.presentArticle(true);
-    //       }
-    //       break;
-    //     case "prev":
-    //       if (this.#sectionIndex - 1 < 0) {
-    //         console.log("Can't go back!");
-    //         this.presentArticle(false);
-    //       } else {
-    //         this.#sectionIndex--;
-    //         this.presentArticle(true);
-    //       }
-    //       break;
-    //     default:
-    //       this.presentArticle(false);
-    //   }
-    // });
   }
 
   showHelp() {
-    console.log("Test");
+    console.log("\nback/b - go back to main menu");
+    console.log("next/n - go to next section");
+    console.log("prev/p - go to previous section\n");
   }
 }
 

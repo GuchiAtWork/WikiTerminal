@@ -24,13 +24,7 @@ const HTMLParser = require("node-html-parser");
 //   });
 
 const WikiSystem = require("./src/WikiSystem");
-const readline = require("readline");
 const inquirer = require("inquirer");
-
-// global.rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
 
 global.prompt = inquirer.createPromptModule();
 
