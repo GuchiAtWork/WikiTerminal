@@ -23,8 +23,17 @@ const HTMLParser = require("node-html-parser");
 //     console.log(err);
 //   });
 
-// const WikiSystem = require("./src/WikiSystem");
+const WikiSystem = require("./src/WikiSystem");
+const readline = require("readline");
+const inquirer = require("inquirer");
 
-// const system = new WikiSystem().getInstance();
+// global.rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
 
-// system.start();
+global.prompt = inquirer.createPromptModule();
+
+const system = new WikiSystem().getInstance();
+
+system.start();

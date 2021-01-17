@@ -1,5 +1,4 @@
 const axios = require("axios");
-const HTMLParser = require("node-html-parser");
 
 class WAfuncs {
   sendRequest(query) {
@@ -7,7 +6,7 @@ class WAfuncs {
     const title =
       "https://en.wikipedia.org/api/rest_v1/page/mobile-sections/" +
       noSpaceQuery;
-    axios
+    return axios
       .get(title)
       .then((res) => {
         return res.data;

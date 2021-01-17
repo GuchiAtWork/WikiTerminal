@@ -1,6 +1,8 @@
 const WikiAPI = require("./WikiAPI");
 const Article = require("./Article");
 const inquirer = require("inquirer");
+const readline = require("readline");
+const { RSA_X931_PADDING } = require("constants");
 
 class WIfuncs {
   constructor() {
@@ -9,18 +11,16 @@ class WIfuncs {
   }
 
   run() {
-    inquirer
-      .prompt([
-        {
-          name: "input",
-          type: "input",
-          message: "Enter command (type help for command list)",
-        },
-      ])
+    prompt([
+      {
+        name: "input",
+        type: "input",
+        message: "Enter command (type help for command list) (Main Menu):",
+      },
+    ])
       .then((answers) => {
         const input = answers.input;
         const command = input.split(" ")[0];
-
         switch (command) {
           case "stop":
             return;
@@ -30,10 +30,13 @@ class WIfuncs {
             break;
           case "wiki":
             const searchIndex = input.indexOf(" ") + 1;
-            this.requester.sendRequest(input.slice(searchIndex).trim());
+            const title = input.slice(searchIndex).trim();
+            const response = this.requester.sendRequest(title);
+            this.createArticle(response);
             break;
           case "help":
             this.displayHelp();
+            this.run();
             break;
           default:
             this.run();
@@ -42,12 +45,43 @@ class WIfuncs {
       .catch((err) => {
         console.log(err);
       });
+
+    // rl.question(
+    //   "Enter command (type help for command list) (Main Menu): ",
+    //   (answer) => {
+    //     rl.close();
+
+    //     const command = answer.split(" ")[0];
+    //     switch (command) {
+    //       case "stop":
+    //         return;
+    //       case "show":
+    //         this.displayArticles();
+    //         this.run();
+    //         break;
+    //       case "wiki":
+    //         const searchIndex = answer.indexOf(" ") + 1;
+    //         const title = answer.slice(searchIndex).trim();
+    //         const response = this.requester.sendRequest(title);
+    //         this.createArticle(response);
+    //         break;
+    //       case "help":
+    //         this.displayHelp();
+    //         this.run();
+    //         break;
+    //       default:
+    //         this.run();
+    //     }
+    //   }
+    // );
   }
 
   displayHelp() {
-    console.log("stop - quit program");
+    console.log("\nstop - quit program");
     console.log("show - shows history of searched articles");
-    console.log("wiki (title of search) - attempts to find wikipedia article");
+    console.log(
+      "wiki (title of search) - attempts to find wikipedia article\n"
+    );
   }
 
   displayArticles() {
@@ -61,7 +95,17 @@ class WIfuncs {
     }
   }
 
-  createArticle() {}
+  async createArticle(res) {
+    const wikiArticle = await res;
+
+    if (wikiArticle !== undefined) {
+      const name = wikiArticle.lead.displaytitle;
+
+      this.articles.push(new Article(name, wikiArticle));
+    }
+
+    this.run();
+  }
 }
 
 class WikiInput {
