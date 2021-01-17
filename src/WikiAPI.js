@@ -1,6 +1,21 @@
+const axios = require("axios");
+const HTMLParser = require("node-html-parser");
+
 class WAfuncs {
   sendRequest(query) {
-    console.log(query);
+    const noSpaceQuery = query.replace(" ", "_");
+    const title =
+      "https://en.wikipedia.org/api/rest_v1/page/mobile-sections/" +
+      noSpaceQuery;
+    axios
+      .get(title)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(`No search results for ${query}. Try again!`);
+        return;
+      });
   }
 }
 

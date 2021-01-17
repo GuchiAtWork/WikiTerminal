@@ -23,8 +23,8 @@ const HTMLParser = require("node-html-parser");
 //     console.log(err);
 //   });
 
-const WikiSystem = require("./src/WikiSystem");
+// const WikiSystem = require("./src/WikiSystem");
 
-const system = new WikiSystem().getInstance();
+// const system = new WikiSystem().getInstance();
 
-system.start();
+// system.start();
