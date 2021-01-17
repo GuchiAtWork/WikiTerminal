@@ -18,6 +18,7 @@ npm run wiki
 - show / w = Show all previous searches
 - access *Article Index* / a *Article Index* = Retrieve article previously searched
 - prev / p = Retrieve last article searched
+
 **In Article Section**
 - back / b = Exit out of Article section. Go back to Main Menu.
 - next / n = Go to next section in article
