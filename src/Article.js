@@ -6,7 +6,11 @@ const WikiInput = require("./WikiInput");
 class Article {
   #name;
   #sections = [];
+
+  // which section to display when in Article section in terminal
   #sectionIndex = 0;
+
+  // storing WikiInput instance so can return to main menu by invoking its method
   #mainmenu;
   constructor(name, wikires, mainmenu) {
     this.#name = name;
@@ -19,6 +23,8 @@ class Article {
   }
 
   createSections(wikires) {
+    // Part responsible for parsing wikipedia HTML content
+
     const summaryHTML = wikires.lead.sections[0].text;
     const summaryParser = HTMLParser.parse(summaryHTML);
     const summaryElements = summaryParser.querySelectorAll("p, li");

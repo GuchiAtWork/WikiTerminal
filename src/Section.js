@@ -1,3 +1,6 @@
+/**
+ * Class responsible for storing section of an wikipedia article
+ */
 class Section {
   #sectionName;
   #sectionData;

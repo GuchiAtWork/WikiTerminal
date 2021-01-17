@@ -1,8 +1,13 @@
 const axios = require("axios");
 
+/**
+ * Class responsible for sending queries to Wikipedia API and returning results
+ */
 class WAfuncs {
   sendRequest(query) {
+    // in case if multiple words are detected
     const noSpaceQuery = query.replace(" ", "_");
+
     const title =
       "https://en.wikipedia.org/api/rest_v1/page/mobile-sections/" +
       noSpaceQuery;
@@ -18,6 +23,7 @@ class WAfuncs {
   }
 }
 
+// Implemented singleton because multiple instances of this class is not useful
 class WikiAPI {
   constructor() {
     if (!WikiAPI.instance) {

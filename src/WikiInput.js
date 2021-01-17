@@ -1,14 +1,17 @@
 const WikiAPI = require("./WikiAPI");
 const Article = require("./Article");
 const inquirer = require("inquirer");
-const { RSA_X931_PADDING } = require("constants");
 
+/**
+ * Class responsible for handling user input and storing articles
+ */
 class WIfuncs {
   constructor() {
     this.articles = [];
     this.requester = new WikiAPI().getInstance();
   }
 
+  // responsible for handling the entire program
   run() {
     prompt([
       {
@@ -18,8 +21,10 @@ class WIfuncs {
       },
     ])
       .then((answers) => {
+        // responsible for extracting first word - command
         const input = answers.input;
         const command = input.split(" ")[0];
+
         switch (command) {
           case "q":
           case "stop":
@@ -29,6 +34,7 @@ class WIfuncs {
             this.displayArticles();
             this.run();
             break;
+          // Responsible for finding query and calling class that calls wiki API
           case "w":
           case "wiki":
             const searchIndex = input.indexOf(" ") + 1;
@@ -40,6 +46,7 @@ class WIfuncs {
             this.displayHelp();
             this.run();
             break;
+          // Used to access article previously searched
           case "a":
           case "access":
             const numberIndex = input.indexOf(" ") + 1;
@@ -94,6 +101,8 @@ class WIfuncs {
     console.log("\n");
   }
 
+  // Article instance created in WikiInput since WikiInput class knows and stores
+  // information pertaining to Article class
   async createArticle(res) {
     const wikiArticle = await res;
 
@@ -105,6 +114,7 @@ class WIfuncs {
   }
 }
 
+// Singleton implemented since it doesn't make sense for multiple WikiInput instances to exist
 class WikiInput {
   constructor() {
     if (!WikiInput.instance) {
