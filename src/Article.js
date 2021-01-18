@@ -100,7 +100,8 @@ class Article {
         message: "Enter command (type help if needed) (Article):",
       },
     ]).then((answers) => {
-      const command = answers.uinput;
+      const input = answers.uinput;
+      const command = input.split(" ")[0];
 
       switch (command) {
         case "help":
@@ -132,6 +133,23 @@ class Article {
             this.presentArticle(true);
           }
           break;
+        case "s":
+        case "show":
+          this.displaySections();
+          this.presentArticle(false);
+          break;
+        case "a":
+        case "access":
+          const numberIndex = input.indexOf(" ") + 1;
+          const index = parseInt(input.slice(numberIndex).trim());
+          if (isNaN(index) || index + 1 > this.#sections.length) {
+            console.log("Insert only a reachable number after access please");
+            this.run();
+          } else {
+            this.#sectionIndex = index;
+            this.presentArticle(true);
+          }
+          break;
         default:
           this.presentArticle(false);
       }
@@ -141,7 +159,17 @@ class Article {
   showHelp() {
     console.log("\nback/b - go back to main menu");
     console.log("next/n - go to next section");
-    console.log("prev/p - go to previous section\n");
+    console.log("prev/p - go to previous section");
+    console.log("show/s - show all sections");
+    console.log("access/a (index of section) - show a specific section\n");
+  }
+
+  displaySections() {
+    console.log("\n");
+    for (let i = 0; i < this.#sections.length; i++) {
+      console.log(`${i}: ${this.#sections[i].title}`);
+    }
+    console.log("\n");
   }
 }
 
