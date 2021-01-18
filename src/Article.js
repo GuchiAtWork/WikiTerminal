@@ -114,7 +114,7 @@ class Article {
           break;
         case "n":
         case "next":
-          if (this.#sectionIndex + 1 > this.#sections.length) {
+          if (this.#sectionIndex + 1 >= this.#sections.length) {
             console.log("Can't go to next section!");
             this.presentArticle(false);
           } else {
