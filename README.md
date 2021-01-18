@@ -18,8 +18,10 @@ npm run wiki
 
 - stop / q = Exit program
 - wiki _Article Title_ / w _Article Title_ = Get Wikipedia article
+  (e.g. wiki ten - ten is the article title)
 - show / w = Show all previous searches
 - access _Article Index_ / a _Article Index_ = Retrieve article previously searched
+  (e.g. access 0 - access the first article searched)
 - prev / p = Retrieve last article searched
 
 **In Article Section**
