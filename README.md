@@ -6,20 +6,26 @@ This is a personal project about fetching wikipedia articles via the terminal.
 
 1. Clone this repository
 2. Run the following commands:
+
 ```
 npm install
 npm run wiki
 ```
+
 ## Commands in program
 
 **In Main Menu Section**
+
 - stop / q = Exit program
-- wiki *Article Title* / w *Article Title* = Get Wikipedia article 
+- wiki _Article Title_ / w _Article Title_ = Get Wikipedia article
 - show / w = Show all previous searches
-- access *Article Index* / a *Article Index* = Retrieve article previously searched
+- access _Article Index_ / a _Article Index_ = Retrieve article previously searched
 - prev / p = Retrieve last article searched
 
 **In Article Section**
+
 - back / b = Exit out of Article section. Go back to Main Menu.
 - next / n = Go to next section in article
 - prev / p = Go to previous section in article
+- show / s = Display all sections in the terminal
+- access _Section Index_ / a _Section Index_ = Access a particular section
