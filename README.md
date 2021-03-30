@@ -1,6 +1,10 @@
-# WikiTerminal - Incomplete
+# WikiTerminal
 
 This is a personal project about fetching wikipedia articles via the terminal.
+
+## Prerequisites
+
+Install NodeJS and npm
 
 ## How to run program
 
